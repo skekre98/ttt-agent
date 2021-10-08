@@ -1,10 +1,15 @@
 // Implementation to tic-tac-toe board
 #include "../include/board.hpp" 
 
-Board::Board(){}
-
-void Board::setBoard(int ma, int na)
+Board::Board(Player player1, Player player2)
 {
-	m = ma;
-	n = na;
+	board = {
+		{0,0,0}, 
+		{0,0,0}, 
+		{0,0,0}
+	};
+	Player p1 = player1;
+	Player p2 = player2;
+	isOver = false;
+	currentPlayer = 1;
 }

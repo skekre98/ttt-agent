@@ -7,3 +7,8 @@ Player::Player(string input_name)
 {
 	name = input_name;	
 }
+
+void Player::feedReward(double reward)
+{
+	cout << "reward given\n";
+}

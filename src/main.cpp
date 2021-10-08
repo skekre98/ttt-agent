@@ -1,5 +1,7 @@
 #include <iostream>
 #include "../include/board.hpp"
+#include "../include/agent.hpp"
+#include "../include/human.hpp"
 
 using namespace std;
 

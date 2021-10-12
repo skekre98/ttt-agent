@@ -22,7 +22,9 @@ public:
 	map<string, double> state_values;
  	Agent(string name);
  	string getHash(Board board);
- 	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);        
+ 	void addState(string state);
+ 	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);
+ 	void feedReward(double reward);        
 };
 
 #endif /* AGENT_HPP */

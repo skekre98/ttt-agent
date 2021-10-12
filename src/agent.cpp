@@ -17,6 +17,10 @@ string Agent::getHash(Board board)
 	return boardHash;
 }
 
+void Agent::addState(string state)
+{
+	states.push_back(state);
+}
 
 tuple<int,int> Agent::chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) 
 {
@@ -44,3 +48,29 @@ tuple<int,int> Agent::chooseAction(vector<tuple<int,int>> positions, vector<vect
 
 	return action;
 }
+
+// backpropagate and update state values depending on reward 
+void Agent::feedReward(double reward)
+{
+	for (int i = states.size()-1; i >= 0; i--) {
+		string state = states[i];
+		if (state_values.find(state) == state_values.end()) {
+			state_values[state] = l_rate * decay_gamma * reward;
+		} else {
+			state_values[state] += l_rate * (decay_gamma * reward - state_values[state]);
+		}
+		reward = state_values[state]
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,8 @@ class Player
 public:
 	string name;
 	Player();
- 	Player(string name);        
+ 	Player(string name);
+ 	void feedReward(double reward);        
 };
 
 #endif /* PLAYER_HPP */

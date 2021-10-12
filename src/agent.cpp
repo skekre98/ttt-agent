@@ -1,7 +1,10 @@
 // Implementation of Agent class
 #include "../include/agent.hpp"
 #include <time.h>
-#include <cstdlib> 
+#include <cstdlib>
+#include <iterator>
+#include <fstream>
+#include <sstream> 
 
 Agent::Agent(string input_name)
 {
@@ -59,13 +62,48 @@ void Agent::feedReward(double reward)
 		} else {
 			state_values[state] += l_rate * (decay_gamma * reward - state_values[state]);
 		}
-		reward = state_values[state]
+		reward = state_values[state];
 	}
 }
 
+void Agent::reset()
+{
+	states.clear();
+}
 
+void Agent::savePolicy()
+{
+	string fname = name + "_policy.txt";
+	fstream newfile;
+	newfile.open(fname,ios::out);
+    map<string, double>::iterator it = state_values.begin();
+    while (it != state_values.end()) {
+    	string line = it->first + "=" + to_string(it->second)+"\n";
+        newfile << line;
+        it++;
+    }
 
+    newfile.close();
+}
 
+void Agent::loadPolicy(string fname)
+{
+	fstream policyFile;
+	policyFile.open(fname,ios::in);
+	state_values.clear();
+	string pair;
+	while (getline(policyFile, pair)) {
+		replace(pair.begin(), pair.end(), '=', ' ');
+		stringstream ss(pair);
+		string state;
+		ss >> state;
+		double score;
+		ss >> score;
+		state_values[state] = score;
+	}
+
+	policyFile.close();
+}
 
 
 

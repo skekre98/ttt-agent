@@ -24,7 +24,10 @@ public:
  	string getHash(Board board);
  	void addState(string state);
  	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);
- 	void feedReward(double reward);        
+ 	void feedReward(double reward); 
+ 	void reset();
+ 	void savePolicy();
+ 	void loadPolicy(string fname);       
 };
 
 #endif /* AGENT_HPP */

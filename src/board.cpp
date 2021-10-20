@@ -136,9 +136,34 @@ void Board::giveReward()
 	}
 }
 
+void Board::reset()
+{
+	board = {
+		{0,0,0}, 
+		{0,0,0}, 
+		{0,0,0}
+	};
+	isOver = false;
+	currentPlayer = 1;
+}
 
+void Board::agentPlay(int rounds)
+{
+	for (int i = 1; i <= rounds; i++) {
+		if (i % 1000 == 0){
+			cout << "Round " << i << "\n";
+		}
 
-
+		tuple<int,int> action;
+		vector<tuple<int,int>> positions;
+		while (!isOver) {
+			positions = availablePositions();
+			action = p1.chooseAction(positions, board, currentPlayer);
+			isOver = true;
+		}
+		reset();
+	}
+}
 
 
 

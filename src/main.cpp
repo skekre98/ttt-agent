@@ -9,6 +9,6 @@ int main() {
 	Agent p1 = Agent("Sharvil");
 	Human p2 = Human("Sharvil2");
 	Board board(p1, p2);
-	board.agentPlay(10000);
+	board.agentPlay(3);
 	return 0;
 }

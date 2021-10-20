@@ -15,5 +15,5 @@ void Player::feedReward(double reward)
 
 tuple<int,int> Player::chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol)
 {
-	return tuple<int,int>(0,0);
+	return tuple<int,int>(0,1);
 }

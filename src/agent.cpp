@@ -1,10 +1,20 @@
 // Implementation of Agent class
 #include "../include/agent.hpp"
+#include "../include/board.hpp"
 #include <time.h>
 #include <cstdlib>
 #include <iterator>
 #include <fstream>
 #include <sstream> 
+
+
+Agent::Agent()
+{
+	name = "Test Agent";
+	l_rate = 0.2;
+	decay_gamma = 0.9;
+	exp_rate = 0.3;
+}
 
 Agent::Agent(string input_name)
 {
@@ -14,15 +24,16 @@ Agent::Agent(string input_name)
 	exp_rate = 0.3;
 }
 
-string Agent::getHash(Board board)
-{
-	string boardHash = board.generateHash();
-	return boardHash;
-}
-
 void Agent::addState(string state)
 {
 	states.push_back(state);
+}
+
+void Agent::showStateValues()
+{
+	for(const auto &[state, vs]  : state_values) {
+	    cout << "State: " << state << ", " << "V(S): " << vs << endl;
+	}	
 }
 
 tuple<int,int> Agent::chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) 
@@ -39,7 +50,7 @@ tuple<int,int> Agent::chooseAction(vector<tuple<int,int>> positions, vector<vect
 			Board newBoard;
 			newBoard.board = currentBoard;
 			newBoard.board[get<0>(p)][get<1>(p)] = playerSymbol;
-			string newBoardHash = getHash(newBoard);
+			string newBoardHash = newBoard.generateHash();
 			double value = state_values.find(newBoardHash) == state_values.end() ? 0.0 : state_values.at(newBoardHash);
 			if (value >= max_value) {
 				max_value = value;

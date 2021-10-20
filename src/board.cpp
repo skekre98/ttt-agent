@@ -3,7 +3,8 @@
 #include <tuple>
 #include <numeric>
 #include <cmath>
-#include <algorithm> 
+#include <algorithm>
+#include <map>
 
 Board::Board()
 {
@@ -14,15 +15,30 @@ Board::Board()
 	};
 }
 
-Board::Board(Player player1, Player player2)
+// constructor with two agents 
+Board::Board(Agent player1, Agent player2)
 {
 	board = {
 		{0,0,0}, 
 		{0,0,0}, 
 		{0,0,0}
 	};
-	p1 = player1;
-	p2 = player2;
+	agent1 = player1;
+	agent2 = player2;
+	isOver = false;
+	currentPlayer = 1;
+}
+
+// constructor with human player
+Board::Board(Agent player1, Human player2)
+{
+	board = {
+		{0,0,0}, 
+		{0,0,0}, 
+		{0,0,0}
+	};
+	agent1 = player1;
+	human = player2;
 	isOver = false;
 	currentPlayer = 1;
 }
@@ -125,19 +141,22 @@ void Board::giveReward()
 {
 	int result = findWinner();
 	if (result == 1){
-		p1.feedReward(1.0);
-		p2.feedReward(0.0);
+		agent1.feedReward(1.0);
+		agent2.feedReward(0.0);
 	} else if (result == -1){
-		p1.feedReward(0.0);
-		p2.feedReward(1.0);
+		agent1.feedReward(0.0);
+		agent2.feedReward(1.0);
 	} else {
-		p1.feedReward(0.1);
-		p2.feedReward(0.5);
+		agent1.feedReward(0.1);
+		agent2.feedReward(0.5);
 	}
 }
 
 void Board::reset()
 {
+	giveReward();
+	agent1.reset();
+	agent2.reset();
 	board = {
 		{0,0,0}, 
 		{0,0,0}, 
@@ -147,6 +166,24 @@ void Board::reset()
 	currentPlayer = 1;
 }
 
+void Board::showBoard()
+{
+	map<int, string> ttt_map {
+        {1, "X"},
+        {-1, "O"},
+        {0, " "},
+    };
+	for (vector<int> row : board) {
+		cout << "-------" << endl;
+		for (int cell : row) {
+			string space = ttt_map[cell];
+			cout << "|" << space;
+		}
+		cout << "|\n";
+	}
+	cout << "-------" << endl;
+}
+
 void Board::agentPlay(int rounds)
 {
 	for (int i = 1; i <= rounds; i++) {
@@ -154,15 +191,36 @@ void Board::agentPlay(int rounds)
 			cout << "Round " << i << "\n";
 		}
 
+		int win;
 		tuple<int,int> action;
 		vector<tuple<int,int>> positions;
 		while (!isOver) {
 			positions = availablePositions();
-			action = p1.chooseAction(positions, board, currentPlayer);
-			isOver = true;
+			action = agent1.chooseAction(positions, board, currentPlayer);
+			updateState(action);
+			showBoard();
+			generateHash();
+			agent1.addState(boardHash);
+			win = findWinner();
+			if (win != 0) {
+				break;
+			} else {
+				positions = availablePositions();
+				action = agent2.chooseAction(positions, board, currentPlayer);
+				updateState(action);
+				showBoard();
+				generateHash();
+				agent2.addState(boardHash);
+				win = findWinner();
+				if (win != 0) {
+					break;
+				}
+			}
 		}
 		reset();
 	}
+	agent1.showStateValues();
+	agent2.showStateValues();
 }
 
 

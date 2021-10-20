@@ -3,7 +3,8 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
 
-#include "../include/player.hpp"
+#include "../include/agent.hpp"
+#include "../include/human.hpp"
 #include <iostream>
 #include <vector>
 
@@ -13,19 +14,22 @@ class Board
 {
 public:
 	vector<vector<int>> board;
-	Player p1;
-	Player p2;
+	Agent agent1;
+	Agent agent2;
+	Human human;
 	bool isOver;
 	string boardHash;
 	int currentPlayer;
 	Board();
- 	Board(Player player1, Player player2);
+ 	Board(Agent player1, Agent player2);
+ 	Board(Agent player1, Human player2);
  	string generateHash();
  	vector<tuple<int,int>> availablePositions();
  	void updateState(tuple<int,int> pos);
  	int findWinner();
  	void giveReward();
  	void reset();
+ 	void showBoard();
  	void agentPlay(int rounds);        
 };
 

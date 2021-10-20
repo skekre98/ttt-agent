@@ -4,7 +4,6 @@
 #define AGENT_HPP
 
 #include "../include/player.hpp"
-#include "../include/board.hpp"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -20,11 +19,12 @@ public:
 	double exp_rate;
 	vector<string> states;
 	map<string, double> state_values;
+	Agent();
  	Agent(string name);
- 	string getHash(Board board);
  	void addState(string state);
- 	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);
- 	void feedReward(double reward); 
+ 	void showStateValues();
+ 	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) override;
+ 	void feedReward(double reward) override; 
  	void reset();
  	void savePolicy();
  	void loadPolicy(string fname);       

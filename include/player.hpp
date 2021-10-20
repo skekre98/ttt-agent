@@ -14,8 +14,8 @@ public:
 	string name;
 	Player();
  	Player(string name);
- 	void feedReward(double reward);
- 	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);        
+ 	virtual void feedReward(double reward);
+ 	virtual tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);        
 };
 
 #endif /* PLAYER_HPP */

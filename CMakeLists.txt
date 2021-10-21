@@ -21,7 +21,7 @@ file(GLOB_RECURSE sources_test test/*.cpp)
 add_executable(ttt-agent ${sources} ${data})
 
 # just for ttt-agent add some compiler flags
-target_compile_options(ttt-agent PUBLIC -std=c++14 -Wall -Wfloat-conversion)
+target_compile_options(ttt-agent PUBLIC -std=c++17 -Wall -Wfloat-conversion)
 
 # this lets me include files relative to the root src dir with a <> pair
 target_include_directories(ttt-agent PUBLIC src)

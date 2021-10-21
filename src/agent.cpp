@@ -113,11 +113,3 @@ void Agent::loadPolicy(string fname)
 
 	policyFile.close();
 }
-
-
-
-
-
-
-
-

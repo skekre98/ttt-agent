@@ -185,10 +185,10 @@ void Board::reset()
 void Board::showBoard()
 {
 	map<int, string> ttt_map {
-        {1, "X"},
-        {-1, "O"},
-        {0, " "},
-    };
+		{1, "X"},
+		{-1, "O"},
+		{0, " "},
+	};
 	for (vector<int> row : board) {
 		cout << "-------" << endl;
 		for (int cell : row) {

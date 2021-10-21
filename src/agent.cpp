@@ -35,7 +35,7 @@ void Agent::showStateValues()
 	}	
 }
 
-// Function for selection actions based on reinforced states 
+// Function for selecting action based on calculated state values 
 tuple<int,int> Agent::chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) 
 {
 	tuple<int, int> action;
@@ -85,14 +85,14 @@ void Agent::savePolicy()
 	string fname = name + "_policy.txt";
 	fstream newfile;
 	newfile.open(fname,ios::out);
-    map<string, double>::iterator it = state_values.begin();
-    while (it != state_values.end()) {
-    	string line = it->first + "=" + to_string(it->second)+"\n";
-        newfile << line;
-        it++;
-    }
+	map<string, double>::iterator it = state_values.begin();
+	while (it != state_values.end()) {
+		string line = it->first + "=" + to_string(it->second)+"\n";
+	    newfile << line;
+	    it++;
+	}
 
-    newfile.close();
+	newfile.close();
 }
 
 void Agent::loadPolicy(string fname)

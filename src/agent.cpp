@@ -85,11 +85,9 @@ void Agent::savePolicy()
 	string fname = name + "_policy.txt";
 	fstream newfile;
 	newfile.open(fname,ios::out);
-	map<string, double>::iterator it = state_values.begin();
-	while (it != state_values.end()) {
-		string line = it->first + "=" + to_string(it->second)+"\n";
-	    newfile << line;
-	    it++;
+	for(const auto &[state, vs]  : state_values) {
+	    string line = state + "=" + to_string(vs) +"\n";
+		newfile << line;
 	}
 
 	newfile.close();

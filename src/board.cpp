@@ -236,6 +236,12 @@ void Board::agentPlay(int rounds)
 		}
 		reset();
 	}
-	agent1.showStateValues();
-	agent2.showStateValues();
+
+	string save;
+	cout << "Would you like to save agent policy values(y,n) ";
+	cin>>save;
+	if (save == "Y" || save == "y" || save == "yes") {
+		agent1.savePolicy();
+		agent2.savePolicy();
+	}
 }

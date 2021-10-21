@@ -80,6 +80,21 @@ void Board::updateState(tuple<int,int> pos)
 	currentPlayer = currentPlayer == 1 ? -1 : 1;
 }
 
+// checks if the board is full 
+void Board::isFull()
+{
+	int count = 0;
+	for (vector<int> row : board) {
+		for (int cell : row) {
+			if (cell == 0) {
+				count++;
+			}
+		}
+	}
+
+	isOver = count == 0 ? true : false;
+}
+
 // checks board state to see if either player has won 
 int Board::findWinner()
 {	
@@ -154,6 +169,7 @@ void Board::giveReward()
 
 void Board::reset()
 {
+	showBoard();
 	giveReward();
 	agent1.reset();
 	agent2.reset();
@@ -198,17 +214,19 @@ void Board::agentPlay(int rounds)
 			positions = availablePositions();
 			action = agent1.chooseAction(positions, board, currentPlayer);
 			updateState(action);
-			showBoard();
 			generateHash();
 			agent1.addState(boardHash);
 			win = findWinner();
 			if (win != 0) {
 				break;
 			} else {
+				isFull();
+				if (isOver) {
+					break;
+				}
 				positions = availablePositions();
 				action = agent2.chooseAction(positions, board, currentPlayer);
 				updateState(action);
-				showBoard();
 				generateHash();
 				agent2.addState(boardHash);
 				win = findWinner();
@@ -222,10 +240,3 @@ void Board::agentPlay(int rounds)
 	agent1.showStateValues();
 	agent2.showStateValues();
 }
-
-
-
-
-
-
-

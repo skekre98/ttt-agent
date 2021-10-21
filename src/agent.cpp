@@ -1,7 +1,6 @@
 // Implementation of Agent class
 #include "../include/agent.hpp"
 #include "../include/board.hpp"
-#include <time.h>
 #include <cstdlib>
 #include <iterator>
 #include <fstream>
@@ -36,12 +35,11 @@ void Agent::showStateValues()
 	}	
 }
 
+// Function for selection actions based on reinforced states 
 tuple<int,int> Agent::chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) 
 {
-	srand((unsigned)time(NULL));
-	double draw = (double)rand()/RAND_MAX;
 	tuple<int, int> action;
-	if (draw <= exp_rate) {
+	if ((double)rand()/RAND_MAX <= exp_rate) {
 		int r_idx = rand() % positions.size();
 		action = positions[r_idx]; 
 	} else {

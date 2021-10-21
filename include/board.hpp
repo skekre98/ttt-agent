@@ -26,6 +26,7 @@ public:
  	string generateHash();
  	vector<tuple<int,int>> availablePositions();
  	void updateState(tuple<int,int> pos);
+ 	void isFull();
  	int findWinner();
  	void giveReward();
  	void reset();

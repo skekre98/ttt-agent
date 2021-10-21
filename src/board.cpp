@@ -217,13 +217,12 @@ void Board::agentPlay(int rounds)
 			generateHash();
 			agent1.addState(boardHash);
 			win = findWinner();
+			isFull();
 			if (win != 0) {
 				break;
+			} else if (isOver){
+				break;
 			} else {
-				isFull();
-				if (isOver) {
-					break;
-				}
 				positions = availablePositions();
 				action = agent2.chooseAction(positions, board, currentPlayer);
 				updateState(action);

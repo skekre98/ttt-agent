@@ -15,12 +15,12 @@ Agent::Agent()
 	exp_rate = 0.3;
 }
 
-Agent::Agent(string input_name)
+Agent::Agent(string input_name, double er)
 {
 	name = input_name;
 	l_rate = 0.2;
 	decay_gamma = 0.9;
-	exp_rate = 0.3;
+	exp_rate = er;
 }
 
 void Agent::addState(string state)

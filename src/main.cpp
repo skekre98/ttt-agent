@@ -10,8 +10,8 @@ int main() {
 	cout << "Would you like to train new TTT agents(y,n) ";
 	cin >> train;
 	if (train == "Y" || train == "y" || train == "yes") {
-		Agent agent1 = Agent("AgentX");
-		Agent agent2 = Agent("AgentO");
+		Agent agent1 = Agent("AgentX", 0.3);
+		Agent agent2 = Agent("AgentO", 0.3);
 		Board board = Board(&agent1, &agent2);
 		int rounds;
 		cout << "How many rounds would you like to simulate: ";
@@ -25,7 +25,7 @@ int main() {
 		string play;
 		if (symbol == "X" || symbol == "x") {
 			Human player1 = Human("HumanX");
-			Agent player2 = Agent("AgentO");
+			Agent player2 = Agent("AgentO", 0.0);
 			player2.loadPolicy("AgentO_policy.txt");
 			Board board = Board(&player1, &player2);
 			while (again) {
@@ -40,7 +40,7 @@ int main() {
 				}
 			}
 		} else {
-			Agent player1 = Agent("AgentX");
+			Agent player1 = Agent("AgentX", 0.0);
 			Human player2 = Human("HumanO");
 			player1.loadPolicy("AgentX_policy.txt");
 			Board board = Board(&player1, &player2);

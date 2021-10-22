@@ -20,7 +20,7 @@ public:
 	vector<string> states;
 	map<string, double> state_values;
 	Agent();
- 	Agent(string name);
+ 	Agent(string name, double er);
  	void addState(string state) override;
  	void showStateValues() override;
  	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) override;

@@ -178,7 +178,6 @@ void Board::giveReward()
 
 void Board::reset()
 {
-	showBoard();
 	giveReward();
 	p1->reset();
 	p2->reset();
@@ -243,6 +242,7 @@ void Board::agentPlay(int rounds)
 				}
 			}
 		}
+		showBoard();
 		reset();
 	}
 
@@ -255,5 +255,49 @@ void Board::agentPlay(int rounds)
 	} else {
 		p1->showStateValues();
 		p2->showStateValues();
+	}
+}
+
+void Board::humanPlay()
+{
+	int win;
+	tuple<int,int> action;
+	vector<tuple<int,int>> positions;
+	while (!isOver) {
+		positions = availablePositions();
+		action = p1->chooseAction(positions, board, currentPlayer);
+		updateState(action);
+		generateHash();
+		p1->addState(boardHash);
+		win = findWinner();
+		isFull();
+		if (win != 0) {
+			break;
+		} else if (isOver){
+			break;
+		} else {
+			positions = availablePositions();
+			action = p2->chooseAction(positions, board, currentPlayer);
+			updateState(action);
+			generateHash();
+			p2->addState(boardHash);
+			win = findWinner();
+			if (win != 0) {
+				break;
+			}
+		}
+	}
+
+	int result = findWinner();
+	showBoard();
+	switch (result) {
+		case 1:
+			cout << "Player X won!" << endl;
+			break;
+		case -1:
+			cout << "Player O won!" << endl;
+			break;
+		default:
+			cout << "Game ended in a tie..." << endl;
 	}
 }

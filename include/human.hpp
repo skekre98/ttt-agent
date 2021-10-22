@@ -13,6 +13,10 @@ class Human: public Player
 public:
 	Human();
  	Human(string name);
+	void addState(string state) override;
+	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) override;
+ 	void feedReward(double reward) override;
+	void reset() override;
 };
 
 #endif /* HUMAN_HPP */

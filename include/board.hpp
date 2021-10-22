@@ -31,7 +31,8 @@ public:
  	void giveReward();
  	void reset();
  	void showBoard();
- 	void agentPlay(int rounds);        
+ 	void agentPlay(int rounds);
+	void humanPlay();        
 };
 
 #endif /* BOARD_HPP */

@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <map>
 
+
 Board::Board()
 {
 	board = {
@@ -16,29 +17,37 @@ Board::Board()
 }
 
 // constructor with two agents 
-Board::Board(Agent player1, Agent player2)
+Board::Board(Agent *player1, Agent *player2) : p1(player1), p2(player2)
 {
 	board = {
 		{0,0,0}, 
 		{0,0,0}, 
 		{0,0,0}
 	};
-	agent1 = player1;
-	agent2 = player2;
 	isOver = false;
 	currentPlayer = 1;
 }
 
-// constructor with human player
-Board::Board(Agent player1, Human player2)
+// constructor with human player1
+Board::Board(Human *player1, Agent *player2) : p1(player1), p2(player2)
 {
 	board = {
 		{0,0,0}, 
 		{0,0,0}, 
 		{0,0,0}
 	};
-	agent1 = player1;
-	human = player2;
+	isOver = false;
+	currentPlayer = 1;
+}
+
+// constructor with human player2
+Board::Board(Agent *player1, Human *player2) : p1(player1), p2(player2)
+{
+	board = {
+		{0,0,0}, 
+		{0,0,0}, 
+		{0,0,0}
+	};
 	isOver = false;
 	currentPlayer = 1;
 }
@@ -156,14 +165,14 @@ void Board::giveReward()
 {
 	int result = findWinner();
 	if (result == 1){
-		agent1.feedReward(1.0);
-		agent2.feedReward(0.0);
+		p1->feedReward(1.0);
+		p2->feedReward(0.0);
 	} else if (result == -1){
-		agent1.feedReward(0.0);
-		agent2.feedReward(1.0);
+		p1->feedReward(0.0);
+		p2->feedReward(1.0);
 	} else {
-		agent1.feedReward(0.1);
-		agent2.feedReward(0.5);
+		p1->feedReward(0.1);
+		p2->feedReward(0.5);
 	}
 }
 
@@ -171,8 +180,8 @@ void Board::reset()
 {
 	showBoard();
 	giveReward();
-	agent1.reset();
-	agent2.reset();
+	p1->reset();
+	p2->reset();
 	board = {
 		{0,0,0}, 
 		{0,0,0}, 
@@ -212,10 +221,10 @@ void Board::agentPlay(int rounds)
 		vector<tuple<int,int>> positions;
 		while (!isOver) {
 			positions = availablePositions();
-			action = agent1.chooseAction(positions, board, currentPlayer);
+			action = p1->chooseAction(positions, board, currentPlayer);
 			updateState(action);
 			generateHash();
-			agent1.addState(boardHash);
+			p1->addState(boardHash);
 			win = findWinner();
 			isFull();
 			if (win != 0) {
@@ -224,10 +233,10 @@ void Board::agentPlay(int rounds)
 				break;
 			} else {
 				positions = availablePositions();
-				action = agent2.chooseAction(positions, board, currentPlayer);
+				action = p2->chooseAction(positions, board, currentPlayer);
 				updateState(action);
 				generateHash();
-				agent2.addState(boardHash);
+				p2->addState(boardHash);
 				win = findWinner();
 				if (win != 0) {
 					break;
@@ -241,7 +250,10 @@ void Board::agentPlay(int rounds)
 	cout << "Would you like to save agent policy values(y,n) ";
 	cin>>save;
 	if (save == "Y" || save == "y" || save == "yes") {
-		agent1.savePolicy();
-		agent2.savePolicy();
+		p1->savePolicy();
+		p2->savePolicy();
+	} else {
+		p1->showStateValues();
+		p2->showStateValues();
 	}
 }

@@ -14,8 +14,12 @@ public:
 	string name;
 	Player();
  	Player(string name);
+	virtual void addState(string state);
+	virtual void showStateValues();
  	virtual void feedReward(double reward);
- 	virtual tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);        
+ 	virtual tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol);
+	virtual void reset();
+ 	virtual void savePolicy();        
 };
 
 #endif /* PLAYER_HPP */

@@ -14,15 +14,15 @@ class Board
 {
 public:
 	vector<vector<int>> board;
-	Agent agent1;
-	Agent agent2;
-	Human human;
+	Player *p1;
+	Player *p2;
 	bool isOver;
 	string boardHash;
 	int currentPlayer;
 	Board();
- 	Board(Agent player1, Agent player2);
- 	Board(Agent player1, Human player2);
+ 	Board(Agent *player1, Agent *player2);
+ 	Board(Agent *player1, Human *player2);
+	Board(Human *player1, Agent *player2);
  	string generateHash();
  	vector<tuple<int,int>> availablePositions();
  	void updateState(tuple<int,int> pos);

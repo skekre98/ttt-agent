@@ -21,12 +21,12 @@ public:
 	map<string, double> state_values;
 	Agent();
  	Agent(string name);
- 	void addState(string state);
- 	void showStateValues();
+ 	void addState(string state) override;
+ 	void showStateValues() override;
  	tuple<int,int> chooseAction(vector<tuple<int,int>> positions, vector<vector<int>> currentBoard, char playerSymbol) override;
  	void feedReward(double reward) override; 
- 	void reset();
- 	void savePolicy();
+ 	void reset() override;
+ 	void savePolicy() override;
  	void loadPolicy(string fname);       
 };
 

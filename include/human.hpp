@@ -12,7 +12,7 @@ class Human: public Player
 {
 public:
 	Human();
- 	Human(string name);        
+ 	Human(string name);
 };
 
 #endif /* HUMAN_HPP */

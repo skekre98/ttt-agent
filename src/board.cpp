@@ -1,5 +1,6 @@
 // Implementation to tic-tac-toe board
 #include "../include/board.hpp"
+#include <cstdlib>
 #include <tuple>
 #include <numeric>
 #include <cmath>
@@ -211,10 +212,6 @@ void Board::showBoard()
 void Board::agentPlay(int rounds)
 {
 	for (int i = 1; i <= rounds; i++) {
-		if (i % 1000 == 0){
-			cout << "Round " << i << "\n";
-		}
-
 		int win;
 		tuple<int,int> action;
 		vector<tuple<int,int>> positions;
@@ -242,7 +239,9 @@ void Board::agentPlay(int rounds)
 				}
 			}
 		}
+		system("clear");
 		showBoard();
+		cout << "Round " << i << endl;
 		reset();
 	}
 

@@ -1,12 +1,48 @@
 // Implementation to tic-tac-toe board
 #include "../include/board.hpp"
 #include <cstdlib>
+#include <iomanip>
+#include <vector>
+#include <chrono>
 #include <tuple>
 #include <numeric>
 #include <cmath>
 #include <algorithm>
 #include <map>
 
+using namespace std;
+using namespace std::chrono;
+
+string convert(int seconds)
+{
+	seconds = seconds % (24 * 3600);
+	int minutes = seconds / 60;
+	seconds %= 60;
+	return to_string(minutes)+"m"+to_string(seconds)+"s";
+}
+
+void showProgress(int currentRound, int rounds, time_point<high_resolution_clock> start)
+{
+	int percent = int(double(currentRound) / double(rounds) * 100);
+	string progressBar = to_string(percent) + "% [";
+	int eq = percent / 10;
+	for (int i = 0; i < eq; i++) {
+		progressBar += "=";
+	}
+	progressBar += ">";
+	for (int j = eq; j < 10; j++) {
+		progressBar += " ";
+	}
+	progressBar += "] ";
+	progressBar += to_string(currentRound) + " rnds";
+	cout << progressBar << endl;
+	auto curr = high_resolution_clock::now();
+	auto duration = duration_cast<seconds>(curr - start);
+	double rps = double(currentRound)/double(duration.count());
+	string time = "Duration: " + convert(duration.count());
+	cout << time << endl;
+	cout << setprecision(2) << fixed << rps << " Rnds/sec" << endl;
+}
 
 Board::Board()
 {
@@ -211,6 +247,7 @@ void Board::showBoard()
 
 void Board::agentPlay(int rounds)
 {
+	auto start = high_resolution_clock::now();
 	for (int i = 1; i <= rounds; i++) {
 		int win;
 		tuple<int,int> action;
@@ -241,7 +278,7 @@ void Board::agentPlay(int rounds)
 		}
 		system("clear");
 		showBoard();
-		cout << "Round " << i << endl;
+		showProgress(i, rounds, start);
 		reset();
 	}
 

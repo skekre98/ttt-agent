@@ -138,7 +138,7 @@ void Board::isFull()
 		}
 	}
 
-	isOver = count == 0 ? true : false;
+	isOver = count == 0;
 }
 
 // checks board state to see if either player has won 
